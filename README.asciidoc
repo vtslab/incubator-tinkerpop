@@ -20,7 +20,7 @@ TinkerPop3
 image:https://raw.githubusercontent.com/apache/incubator-tinkerpop/master/docs/static/images/tinkerpop3-splash.png[TinkerPop3, link="http://tinkerpop.incubator.apache.org"]
 
 Clone documentation
-~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~
 
 This clone provides the necessary changes to build Apache TinkerPop 3.1.0-incubating
 against the link:http://repo.hortonworks.com/content/groups/public/[HDP-2.3.2.0-2950 HortonWorks Data Platform distribution]. This repo will also
@@ -28,8 +28,10 @@ provide room for other combinations of Apache TinkerPop Incubating releases and
 Hortonworks HDP releases. Also combinations of Apache TinkerPop Incubating releases
 and releases of other major open source Hadoop distributions are welcome.
 
+NB Currently, only branch 3.1.0-hdp-2.3.2.0-2950 is relevant in this cloned repo.
+
 Upstream documentation
-~~~~~~~~~~~~~
+~~~~~~~~~~~~~~~~~~~~~~
 
 TinkerPop3 provides graph computing capabilities for both graph databases (OLTP) and graph analytic systems (OLAP).
 
