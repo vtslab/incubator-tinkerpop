@@ -81,6 +81,10 @@ limitations under the License.
                     <groupId>javax.servlet</groupId>
                     <artifactId>servlet-api</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>org.apache.zookeeper</groupId>
+                    <artifactId>zookeeper</artifactId>
+                </exclusion>
             </exclusions>
             <!--<scope>provided</scope>-->
         </dependency>
@@ -220,7 +224,7 @@ limitations under the License.
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Gremlin-Plugin-Dependencies>org.apache.hadoop:hadoop-client:2.7.1
+                            <Gremlin-Plugin-Dependencies>org.apache.hadoop:hadoop-client:2.7.1.${hdp.version}
                             </Gremlin-Plugin-Dependencies>
                         </manifestEntries>
                     </archive>

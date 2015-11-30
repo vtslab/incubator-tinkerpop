@@ -78,10 +78,10 @@
                     <groupId>org.xerial.snappy</groupId>
                     <artifactId>snappy-java</artifactId>
                 </exclusion>
-                <exclusion>
+                <!--exclusion>
                     <groupId>org.apache.avro</groupId>
                     <artifactId>avro</artifactId>
-                </exclusion>
+                </exclusion-->
                 <exclusion>
                     <groupId>org.apache.commons</groupId>
                     <artifactId>commons-math3</artifactId>
@@ -98,13 +98,17 @@
                     <groupId>com.thoughtworks.paranamer</groupId>
                     <artifactId>paranamer</artifactId>
                 </exclusion>
+                <exclusion>
+                    <groupId>com.fasterxml.jackson.core</groupId>
+                    <artifactId>jackson-core</artifactId>
+                </exclusion>
             </exclusions>
         </dependency>
         <!-- SPARK -->
         <dependency>
             <groupId>org.apache.spark</groupId>
             <artifactId>spark-core_2.10</artifactId>
-            <version>1.5.1</version>
+            <version>1.4.1.${hdp.version}</version>
             <exclusions>
                 <!-- self conflicts -->
                 <exclusion>
@@ -275,10 +279,10 @@
                     <groupId>org.xerial.snappy</groupId>
                     <artifactId>snappy-java</artifactId>
                 </exclusion>
-                <exclusion>
+                <!-- exclusion>
                     <groupId>org.apache.avro</groupId>
                     <artifactId>avro</artifactId>
-                </exclusion>
+                </exclusion-->
                 <exclusion>
                     <groupId>org.apache.commons</groupId>
                     <artifactId>commons-math3</artifactId>
@@ -378,7 +382,7 @@
                 <configuration>
                     <archive>
                         <manifestEntries>
-                            <Gremlin-Plugin-Dependencies>org.apache.hadoop:hadoop-client:2.7.1
+                            <Gremlin-Plugin-Dependencies>org.apache.hadoop:hadoop-client:2.7.1.${hdp.version}
                             </Gremlin-Plugin-Dependencies>
                             <!-- deletes the servlet-api jar from the path after install - causes conflicts -->
                             <Gremlin-Plugin-Paths>servlet-api-2.5.jar=</Gremlin-Plugin-Paths>

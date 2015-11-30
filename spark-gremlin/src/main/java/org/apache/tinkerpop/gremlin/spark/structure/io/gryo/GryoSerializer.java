@@ -30,7 +30,7 @@ import org.apache.spark.network.util.ByteUnit;
 import org.apache.spark.scheduler.CompressedMapStatus;
 import org.apache.spark.serializer.Serializer;
 import org.apache.spark.serializer.SerializerInstance;
-import org.apache.spark.util.SerializableConfiguration;
+//import org.apache.spark.util.SerializableConfiguration; Interferes with spark-1.4.1
 import org.apache.tinkerpop.gremlin.hadoop.structure.io.ObjectWritable;
 import org.apache.tinkerpop.gremlin.hadoop.structure.io.VertexWritable;
 import org.apache.tinkerpop.gremlin.spark.process.computer.payload.MessagePayload;
@@ -88,12 +88,13 @@ public final class GryoSerializer extends Serializer {
                                 .addCustom(ViewIncomingPayload.class)
                                 .addCustom(ViewOutgoingPayload.class)
                                 .addCustom(ViewPayload.class)
-                                .addCustom(SerializableConfiguration.class, new JavaSerializer())
                                 .addCustom(VertexWritable.class, new JavaSerializer())
                                 .addCustom(ObjectWritable.class, new JavaSerializer())
                                 .referenceTracking(referenceTracking)
                                 .registrationRequired(registrationRequired);
                         // add these as we find ClassNotFoundExceptions
+                        //      .addCustom(SerializableConfiguration.class, new JavaSerializer())
+                        // interferes with spark-1.4.1
                     } catch (final ClassNotFoundException e) {
                         throw new IllegalStateException(e);
                     }

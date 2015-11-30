@@ -140,12 +140,49 @@ limitations under the License.
         <skipIntegrationTests>true</skipIntegrationTests>
         <skipPerformanceTests>true</skipPerformanceTests>
         <slf4j.version>1.7.12</slf4j.version>
-        <hadoop.version>2.7.1</hadoop.version>
+        <!-- hdp.version is added to all hadoop and spark dependencies that
+             have an hdp specific version -->
+        <hdp.version>2.3.2.0-2950</hdp.version>
+        <hadoop.version>2.7.1.${hdp.version}</hadoop.version>
         <commons.configuration.version>1.10</commons.configuration.version>
         <java.tuples.version>1.2</java.tuples.version>
         <javadoc-plugin.version>2.10.1</javadoc-plugin.version>
         <muteTestLogs>false</muteTestLogs>
     </properties>
+    <repositories>
+     <repository>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+        <checksumPolicy>warn</checksumPolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+        <updatePolicy>never</updatePolicy>
+        <checksumPolicy>fail</checksumPolicy>
+      </snapshots>
+      <id>HDPReleases</id>
+      <name>HDP Releases</name>
+      <url>http://repo.hortonworks.com/content/repositories/releases/</url>
+      <layout>default</layout>
+     </repository>
+     <repository>
+      <releases>
+        <enabled>true</enabled>
+        <updatePolicy>always</updatePolicy>
+        <checksumPolicy>warn</checksumPolicy>
+      </releases>
+      <snapshots>
+        <enabled>false</enabled>
+        <updatePolicy>never</updatePolicy>
+        <checksumPolicy>fail</checksumPolicy>
+      </snapshots>
+      <id>HDPPublic</id>
+      <name>HDP Public</name>
+      <url>http://repo.hortonworks.com/content/groups/public/</url>
+      <layout>default</layout>
+     </repository>
+    </repositories> 
     <build>
         <directory>${basedir}/target</directory>
         <plugins>
