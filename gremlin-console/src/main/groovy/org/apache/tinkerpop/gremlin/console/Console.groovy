@@ -152,7 +152,8 @@ class Console {
             } catch (Exception ignored) {
                 // ok if this times out - just trying to be polite on shutdown
             } finally {
-                System.exit(0)
+                Runtime.getRuntime().halt(0)
+                // System.exit(0) Does not close if threads still run
             }
         }
     }
@@ -292,10 +293,12 @@ class Console {
             reader.close()
         } catch (FileNotFoundException ignored) {
             io.err.println(String.format("Gremlin initialization file not found at [%s].", initScriptFile))
-            System.exit(1)
+            Runtime.getRuntime().halt(1)
+            // System.exit(1) Does not close if threads still run
         } catch (IOException ignored) {
             io.err.println(String.format("Bad line in Gremlin initialization file at [%s].", line))
-            System.exit(1)
+            Runtime.getRuntime().halt(1)
+            // System.exit(1) Does not close if threads still run
         }
     }
 
