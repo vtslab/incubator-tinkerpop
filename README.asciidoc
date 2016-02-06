@@ -30,6 +30,9 @@ and releases of other major open source Hadoop distributions are welcome.
 
 NB Currently, only branch 3.1.0-hdp-2.3.2.0-2950 is relevant in this cloned repo.
 
+See also similiar work for hdp-2.3.4 on:
+link:https://github.com/pluradj/ambari-vagrant/blob/tp3/ubuntu14.4/tp3/SparkGraphComputer.md[https://github.com/pluradj/ambari-vagrant/blob/tp3/ubuntu14.4/tp3/SparkGraphComputer.md]
+
 Upstream documentation
 ~~~~~~~~~~~~~~~~~~~~~~
 
