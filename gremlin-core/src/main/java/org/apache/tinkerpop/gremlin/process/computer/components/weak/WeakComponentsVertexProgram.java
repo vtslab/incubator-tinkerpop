@@ -29,13 +29,16 @@ import org.apache.tinkerpop.gremlin.structure.Vertex;
 import org.apache.tinkerpop.gremlin.structure.VertexProperty;
 import org.apache.tinkerpop.gremlin.structure.util.StringFactory;
 
+import java.io.Serializable;
 import java.util.*;
+
+interface M extends Comparable, Serializable {}
 
 
 /**
  * @author Marc de Lignie
  */
-public class WeakComponentsVertexProgram implements VertexProgram<Comparable> {
+public class WeakComponentsVertexProgram implements VertexProgram<M> {
 
 
     public static final String COMPONENT = "gremlin.weakComponentsVertexProgram.weakComponent";
@@ -44,8 +47,8 @@ public class WeakComponentsVertexProgram implements VertexProgram<Comparable> {
     private static final String MAX_ITERATIONS = "gremlin.weakComponentsVertexProgram.maxIterations";
     private static final String PROPERTY = "gremlin.weakComponentsVertexProgram.property";
 
-    private MessageScope.Local<Comparable> inScope = MessageScope.Local.of(__::inE);
-    private MessageScope.Local<Comparable> outScope = MessageScope.Local.of(__::outE);
+    private MessageScope.Local<M> inScope = MessageScope.Local.of(__::inE);
+    private MessageScope.Local<M> outScope = MessageScope.Local.of(__::outE);
     private int maxIterations;
     private String property = COMPONENT;
     private Set<VertexComputeKey> vertexComputeKeys;
@@ -93,11 +96,11 @@ public class WeakComponentsVertexProgram implements VertexProgram<Comparable> {
     }
 
     @Override
-    public Optional<MessageCombiner<Comparable>> getMessageCombiner() {
-        return Optional.of(new MessageCombiner<Comparable>() {
+    public Optional<MessageCombiner<M>> getMessageCombiner() {
+        return Optional.of(new MessageCombiner<M>() {
             @Override
-            public Comparable combine ( final Comparable messageA, final Comparable messageB){
-                return (Comparable)ObjectUtils.min(messageA, messageB);
+            public M combine ( final M messageA, final M messageB){
+                return (M)ObjectUtils.min(messageA, messageB);
             }
         });
     }
@@ -126,18 +129,18 @@ public class WeakComponentsVertexProgram implements VertexProgram<Comparable> {
         HAS_SENT indicates whether a vertex has sent a message
     */
     @Override
-    public void execute(final Vertex vertex, Messenger<Comparable> messenger, final Memory memory) {
+    public void execute(final Vertex vertex, Messenger<M> messenger, final Memory memory) {
         if (memory.isInitialIteration()) {
-            messenger.sendMessage(this.inScope, (Comparable)(vertex.id()));
-            messenger.sendMessage(this.outScope, (Comparable)(vertex.id()));
+            messenger.sendMessage(this.inScope, (M)(vertex.id()));
+            messenger.sendMessage(this.outScope, (M)(vertex.id()));
             vertex.property(VertexProperty.Cardinality.single, this.property, vertex.id());
             vertex.property(VertexProperty.Cardinality.single, HAS_SENT, true);
             memory.add(CHANGED, 1L);
         } else {
-            final List<Comparable> receivedMessages = new ArrayList<>();
+            final List<M> receivedMessages = new ArrayList<>();
             messenger.receiveMessages().forEachRemaining(receivedMessages::add);
-            final Comparable receivedComponent = receivedMessages.stream().reduce(
-                    null, (a, b) -> (Comparable)ObjectUtils.min(a, b));
+            final M receivedComponent = receivedMessages.stream().reduce(
+                    null, (a, b) -> (M)ObjectUtils.min(a, b));
             System.out.println(String.format("receivedComponent: %d", receivedComponent));
             if (ObjectUtils.compare(receivedComponent, vertex.value(this.property), true) < 0) {
                 messenger.sendMessage(this.inScope, receivedComponent);
