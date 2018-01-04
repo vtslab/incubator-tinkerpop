@@ -20,13 +20,7 @@ package org.apache.tinkerpop.gremlin.process.computer.components.weak;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.ObjectUtils;
-import org.apache.tinkerpop.gremlin.process.computer.GraphComputer;
-import org.apache.tinkerpop.gremlin.process.computer.Memory;
-import org.apache.tinkerpop.gremlin.process.computer.MemoryComputeKey;
-import org.apache.tinkerpop.gremlin.process.computer.MessageScope;
-import org.apache.tinkerpop.gremlin.process.computer.Messenger;
-import org.apache.tinkerpop.gremlin.process.computer.VertexComputeKey;
-import org.apache.tinkerpop.gremlin.process.computer.VertexProgram;
+import org.apache.tinkerpop.gremlin.process.computer.*;
 import org.apache.tinkerpop.gremlin.process.computer.util.AbstractVertexProgramBuilder;
 import org.apache.tinkerpop.gremlin.process.traversal.Operator;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
@@ -98,11 +92,15 @@ public class WeakComponentsVertexProgram implements VertexProgram<Comparable> {
         return this.memoryComputeKeys;
     }
 
-// ToDo: Object.min() combiner as anonymous class
-//    @Override
-//    public Optional<MessageCombiner<Long>> getMessageCombiner() {
-//        return (Optional) PageRankMessageCombiner.instance();
-//    }
+    @Override
+    public Optional<MessageCombiner<Comparable>> getMessageCombiner() {
+        return Optional.of(new MessageCombiner<Comparable>() {
+            @Override
+            public Comparable combine ( final Comparable messageA, final Comparable messageB){
+                return (Comparable)ObjectUtils.min(messageA, messageB);
+            }
+        });
+    }
 
     @Override
     public Set<MessageScope> getMessageScopes(final Memory memory) {
