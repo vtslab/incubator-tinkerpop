@@ -44,6 +44,7 @@ import org.apache.tinkerpop.gremlin.process.computer.bulkloading.OneTimeBulkLoad
 import org.apache.tinkerpop.gremlin.process.computer.clustering.peerpressure.ClusterCountMapReduce;
 import org.apache.tinkerpop.gremlin.process.computer.clustering.peerpressure.ClusterPopulationMapReduce;
 import org.apache.tinkerpop.gremlin.process.computer.clustering.peerpressure.PeerPressureVertexProgram;
+import org.apache.tinkerpop.gremlin.process.computer.components.weak.WeakComponentsVertexProgram;
 import org.apache.tinkerpop.gremlin.process.computer.ranking.pagerank.PageRankMapReduce;
 import org.apache.tinkerpop.gremlin.process.computer.ranking.pagerank.PageRankVertexProgram;
 import org.apache.tinkerpop.gremlin.process.computer.traversal.MemoryTraversalSideEffects;
@@ -258,6 +259,7 @@ public final class CoreImports {
         CLASS_IMPORTS.add(ClusterPopulationMapReduce.class);
         CLASS_IMPORTS.add(MemoryTraversalSideEffects.class);
         CLASS_IMPORTS.add(PeerPressureVertexProgram.class);
+        CLASS_IMPORTS.add(WeakComponentsVertexProgram.class);
         CLASS_IMPORTS.add(PageRankMapReduce.class);
         CLASS_IMPORTS.add(PageRankVertexProgram.class);
         CLASS_IMPORTS.add(GraphFilterStrategy.class);
