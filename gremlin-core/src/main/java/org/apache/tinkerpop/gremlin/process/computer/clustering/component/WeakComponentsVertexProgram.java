@@ -16,7 +16,7 @@
  * specific language governing permissions and limitations
  * under the License.
  */
-package org.apache.tinkerpop.gremlin.process.computer.components.weak;
+package org.apache.tinkerpop.gremlin.process.computer.clustering.component;
 
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.ObjectUtils;
@@ -32,13 +32,11 @@ import org.apache.tinkerpop.gremlin.structure.util.StringFactory;
 import java.io.Serializable;
 import java.util.*;
 
-interface M extends Comparable, Serializable {}
-
 
 /**
  * @author Marc de Lignie
  */
-public class WeakComponentsVertexProgram implements VertexProgram<M> {
+public class WeakComponentsVertexProgram<M extends Comparable & Serializable> implements VertexProgram<M> {
 
 
     public static final String COMPONENT = "gremlin.weakComponentsVertexProgram.weakComponent";
