@@ -62,7 +62,7 @@ public class WeakComponentsVertexProgram<M extends Comparable & Serializable> im
         this.vertexComputeKeys = new HashSet<>(Arrays.asList(
                 VertexComputeKey.of(this.property, false),
                 VertexComputeKey.of(HAS_SENT, true)));
-        this.memoryComputeKeys = new HashSet<>(Arrays.asList(
+        this.memoryComputeKeys = new HashSet<>(Arrays.asList( // ToDo: use VOTE_TO_HALT mechanism from PeerPressure
                 MemoryComputeKey.of(CHANGED, Operator.sum, false, true)));
     }
 

@@ -43,8 +43,8 @@ import org.apache.tinkerpop.gremlin.process.computer.bulkloading.IncrementalBulk
 import org.apache.tinkerpop.gremlin.process.computer.bulkloading.OneTimeBulkLoader;
 import org.apache.tinkerpop.gremlin.process.computer.clustering.ClusterCountMapReduce;
 import org.apache.tinkerpop.gremlin.process.computer.clustering.ClusterPopulationMapReduce;
+import org.apache.tinkerpop.gremlin.process.computer.clustering.component.WeakComponentsVertexProgram;
 import org.apache.tinkerpop.gremlin.process.computer.clustering.peerpressure.PeerPressureVertexProgram;
-import org.apache.tinkerpop.gremlin.process.computer.components.weak.WeakComponentsVertexProgram;
 import org.apache.tinkerpop.gremlin.process.computer.ranking.pagerank.PageRankMapReduce;
 import org.apache.tinkerpop.gremlin.process.computer.ranking.pagerank.PageRankVertexProgram;
 import org.apache.tinkerpop.gremlin.process.computer.traversal.MemoryTraversalSideEffects;
