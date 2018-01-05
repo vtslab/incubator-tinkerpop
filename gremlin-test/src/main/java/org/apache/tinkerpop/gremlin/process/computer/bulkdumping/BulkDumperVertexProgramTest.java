@@ -20,6 +20,7 @@ package org.apache.tinkerpop.gremlin.process.computer.bulkdumping;
 
 import org.apache.tinkerpop.gremlin.LoadGraphWith;
 import org.apache.tinkerpop.gremlin.process.AbstractGremlinProcessTest;
+import org.apache.tinkerpop.gremlin.process.computer.AbstractVertexProgramTest;
 import org.apache.tinkerpop.gremlin.process.computer.ComputerResult;
 import org.apache.tinkerpop.gremlin.process.computer.GraphComputer;
 import org.apache.tinkerpop.gremlin.structure.Direction;
@@ -33,7 +34,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Daniel Kuppitz (http://gremlin.guru)
  */
-public class BulkDumperVertexProgramTest extends AbstractGremlinProcessTest {
+public class BulkDumperVertexProgramTest extends AbstractVertexProgramTest {
 
     @Test
     @LoadGraphWith(MODERN)

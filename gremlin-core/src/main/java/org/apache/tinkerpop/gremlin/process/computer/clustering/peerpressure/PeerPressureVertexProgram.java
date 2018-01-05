@@ -74,7 +74,8 @@ public class PeerPressureVertexProgram extends StaticVertexProgram<Pair<Serializ
     private boolean distributeVote = false;
     private String property = ClusterCountMapReduce.CLUSTER;
 
-    private static final Set<MemoryComputeKey> MEMORY_COMPUTE_KEYS = Collections.singleton(MemoryComputeKey.of(VOTE_TO_HALT, Operator.and, false, true));
+    private static final Set<MemoryComputeKey> MEMORY_COMPUTE_KEYS = Collections.singleton(
+            MemoryComputeKey.of(VOTE_TO_HALT, Operator.and, false, true));
 
     private PeerPressureVertexProgram() {
 
@@ -108,7 +109,9 @@ public class PeerPressureVertexProgram extends StaticVertexProgram<Pair<Serializ
 
     @Override
     public Set<VertexComputeKey> getVertexComputeKeys() {
-        return new HashSet<>(Arrays.asList(VertexComputeKey.of(this.property, false), VertexComputeKey.of(VOTE_STRENGTH, true)));
+        return new HashSet<>(Arrays.asList(
+                VertexComputeKey.of(this.property, false),
+                VertexComputeKey.of(VOTE_STRENGTH, true)));
     }
 
     @Override

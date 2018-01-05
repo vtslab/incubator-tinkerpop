@@ -20,6 +20,7 @@ package org.apache.tinkerpop.gremlin.process.computer.ranking.pagerank;
 
 import org.apache.tinkerpop.gremlin.LoadGraphWith;
 import org.apache.tinkerpop.gremlin.process.AbstractGremlinProcessTest;
+import org.apache.tinkerpop.gremlin.process.computer.AbstractVertexProgramTest;
 import org.apache.tinkerpop.gremlin.process.computer.ComputerResult;
 import org.apache.tinkerpop.gremlin.process.computer.GraphComputer;
 import org.apache.tinkerpop.gremlin.util.iterator.IteratorUtils;
@@ -32,7 +33,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Marko A. Rodriguez (http://markorodriguez.com)
  */
-public class PageRankVertexProgramTest extends AbstractGremlinProcessTest {
+public class PageRankVertexProgramTest extends AbstractVertexProgramTest {
 
     @Test
     @LoadGraphWith(MODERN)

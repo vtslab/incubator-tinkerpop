@@ -24,6 +24,7 @@ import org.apache.tinkerpop.gremlin.LoadGraphWith;
 import org.apache.tinkerpop.gremlin.TestHelper;
 import org.apache.tinkerpop.gremlin.process.AbstractGremlinProcessTest;
 import org.apache.tinkerpop.gremlin.process.IgnoreEngine;
+import org.apache.tinkerpop.gremlin.process.computer.AbstractVertexProgramTest;
 import org.apache.tinkerpop.gremlin.process.traversal.TraversalEngine;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
@@ -51,7 +52,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * @author Daniel Kuppitz (http://gremlin.guru)
  */
-public class BulkLoaderVertexProgramTest extends AbstractGremlinProcessTest {
+public class BulkLoaderVertexProgramTest extends AbstractVertexProgramTest {
 
     final static String TINKERGRAPH_LOCATION = TestHelper.makeTestDataDirectory(BulkLoaderVertexProgramTest.class) + "tinkertest.kryo";
 

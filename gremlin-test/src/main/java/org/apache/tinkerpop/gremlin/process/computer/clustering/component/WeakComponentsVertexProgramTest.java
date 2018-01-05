@@ -21,6 +21,7 @@ package org.apache.tinkerpop.gremlin.process.computer.clustering.component;
 
 import org.apache.tinkerpop.gremlin.LoadGraphWith;
 import org.apache.tinkerpop.gremlin.process.AbstractGremlinProcessTest;
+import org.apache.tinkerpop.gremlin.process.computer.AbstractVertexProgramTest;
 import org.apache.tinkerpop.gremlin.process.computer.ComputerResult;
 import org.apache.tinkerpop.gremlin.process.computer.GraphComputer;
 import org.apache.tinkerpop.gremlin.process.computer.clustering.ClusterCountMapReduce;
@@ -35,9 +36,10 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
+ * @author Marko A. Rodriguez (http://markorodriguez.com)
  * @author Marc de Lignie
  */
-public class WeakComponentsVertexProgramTest extends AbstractGremlinProcessTest {
+public class WeakComponentsVertexProgramTest extends AbstractVertexProgramTest {
 
     @Test
     @LoadGraphWith(MODERN)

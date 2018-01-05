@@ -85,25 +85,29 @@ import java.util.Iterator;
         method = "*",
         reason = "RemoteGraph does not support PartitionStrategy at this time")
 @Graph.OptOut(
-        test = "org.apache.tinkerpop.gremlin.process.computer.ranking.pagerank.PageRankVertexProgramTest",
+        test = "org.apache.tinkerpop.gremlin.process.computer.AbstractVertexProgramTest",
         method = "*",
         reason = "RemoteGraph does not support direct Graph.compute() access")
-@Graph.OptOut(
-        test = "org.apache.tinkerpop.gremlin.process.computer.bulkloading.BulkLoaderVertexProgramTest",
-        method = "*",
-        reason = "RemoteGraph does not support direct Graph.compute() access")
-@Graph.OptOut(
-        test = "org.apache.tinkerpop.gremlin.process.computer.bulkdumping.BulkDumperVertexProgramTest",
-        method = "*",
-        reason = "RemoteGraph does not support direct Graph.compute() access")
-@Graph.OptOut(
-        test = "org.apache.tinkerpop.gremlin.process.computer.clustering.peerpressure.PeerPressureVertexProgramTest",
-        method = "*",
-        reason = "RemoteGraph does not support direct Graph.compute() access")
-@Graph.OptOut(
-        test = "org.apache.tinkerpop.gremlin.process.computer.clustering.component.WeakComponentsVertexProgramTest",
-        method = "*",
-        reason = "RemoteGraph does not support direct Graph.compute() access")
+//@Graph.OptOut(
+//        test = "org.apache.tinkerpop.gremlin.process.computer.ranking.pagerank.PageRankVertexProgramTest",
+//        method = "*",
+//        reason = "RemoteGraph does not support direct Graph.compute() access")
+//@Graph.OptOut(
+//        test = "org.apache.tinkerpop.gremlin.process.computer.bulkloading.BulkLoaderVertexProgramTest",
+//        method = "*",
+//        reason = "RemoteGraph does not support direct Graph.compute() access")
+//@Graph.OptOut(
+//        test = "org.apache.tinkerpop.gremlin.process.computer.bulkdumping.BulkDumperVertexProgramTest",
+//        method = "*",
+//        reason = "RemoteGraph does not support direct Graph.compute() access")
+//@Graph.OptOut(
+//        test = "org.apache.tinkerpop.gremlin.process.computer.clustering.peerpressure.PeerPressureVertexProgramTest",
+//        method = "*",
+//        reason = "RemoteGraph does not support direct Graph.compute() access")
+//@Graph.OptOut(
+//        test = "org.apache.tinkerpop.gremlin.process.computer.clustering.component.WeakComponentsVertexProgramTest",
+//        method = "*",
+//        reason = "RemoteGraph does not support direct Graph.compute() access")
 @Graph.OptOut(
         test = "org.apache.tinkerpop.gremlin.process.computer.GraphComputerTest",
         method = "*",
