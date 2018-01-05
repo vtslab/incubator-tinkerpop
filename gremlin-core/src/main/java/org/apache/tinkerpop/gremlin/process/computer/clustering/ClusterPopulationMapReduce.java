@@ -19,7 +19,6 @@
 package org.apache.tinkerpop.gremlin.process.computer.clustering;
 
 import org.apache.tinkerpop.gremlin.process.computer.KeyValue;
-import org.apache.tinkerpop.gremlin.process.computer.clustering.peerpressure.PeerPressureVertexProgram;
 import org.apache.tinkerpop.gremlin.process.computer.util.StaticMapReduce;
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.structure.Property;
@@ -67,7 +66,7 @@ public class ClusterPopulationMapReduce extends StaticMapReduce<Serializable, Lo
 
     @Override
     public void map(final Vertex vertex, final MapEmitter<Serializable, Long> emitter) {
-        final Property<Serializable> cluster = vertex.property(PeerPressureVertexProgram.CLUSTER);
+        final Property<Serializable> cluster = vertex.property(ClusterCountMapReduce.CLUSTER);
         if (cluster.isPresent()) {
             emitter.emit(cluster.value(), 1l);
         }

@@ -23,6 +23,7 @@ import org.apache.tinkerpop.gremlin.LoadGraphWith;
 import org.apache.tinkerpop.gremlin.process.AbstractGremlinProcessTest;
 import org.apache.tinkerpop.gremlin.process.computer.ComputerResult;
 import org.apache.tinkerpop.gremlin.process.computer.GraphComputer;
+import org.apache.tinkerpop.gremlin.process.computer.clustering.ClusterCountMapReduce;
 import org.apache.tinkerpop.gremlin.util.iterator.IteratorUtils;
 import org.junit.Test;
 
@@ -34,7 +35,7 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 
 /**
- * @author Marko A. Rodriguez (http://markorodriguez.com)
+ * @author Marc de Lignie
  */
 public class WeakComponentsVertexProgramTest extends AbstractGremlinProcessTest {
 
@@ -47,14 +48,18 @@ public class WeakComponentsVertexProgramTest extends AbstractGremlinProcessTest 
             result.graph().traversal().V().forEachRemaining(v -> {
                 assertEquals(3, v.keys().size()); // name, age/lang, component
                 assertTrue(v.keys().contains("name"));
-                assertTrue(v.keys().contains(WeakComponentsVertexProgram.COMPONENT));
+                assertTrue(v.keys().contains(ClusterCountMapReduce.CLUSTER));
                 assertEquals(1, IteratorUtils.count(v.values("name")));
-                assertEquals(1, IteratorUtils.count(v.values(WeakComponentsVertexProgram.COMPONENT)));
-                final Object cluster = v.value(WeakComponentsVertexProgram.COMPONENT);
+                assertEquals(1, IteratorUtils.count(v.values(ClusterCountMapReduce.CLUSTER)));
+                final Object cluster = v.value(ClusterCountMapReduce.CLUSTER);
                 clusters.add(cluster);
             });
             assertEquals(1, clusters.size());
             assertEquals(3, result.memory().getIteration());
         }
     }
+    //ToDo: add test for multiple clusters
+    //ToDo: ClusterCountMapReduce and ClusterPopulationMapReduce tests in AbstractStorageCheck (already works manually)
+    //Done: gremlin-server test fails on org.apache.tinkerpop.gremlin.groovy.jsr223.RemoteGraphGroovyTranslatorProcessStandardTest
+    //ToDo: better way for optouts in org/apache/tinkerpop/gremlin/process/remote/RemoteGraph.java:  instanceOf VertexProgram
 }

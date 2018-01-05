@@ -20,7 +20,6 @@ package org.apache.tinkerpop.gremlin.process.computer.clustering;
 
 import org.apache.tinkerpop.gremlin.process.computer.KeyValue;
 import org.apache.tinkerpop.gremlin.process.computer.MapReduce;
-import org.apache.tinkerpop.gremlin.process.computer.clustering.peerpressure.PeerPressureVertexProgram;
 import org.apache.tinkerpop.gremlin.process.computer.util.StaticMapReduce;
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.structure.Property;
@@ -38,6 +37,7 @@ import java.util.Set;
  */
 public class ClusterCountMapReduce extends StaticMapReduce<MapReduce.NullObject, Serializable, MapReduce.NullObject, Integer, Integer> {
 
+    public static final String CLUSTER = "gremlin.clustering.cluster";
     public static final String CLUSTER_COUNT_MEMORY_KEY = "gremlin.clusterCountMapReduce.memoryKey";
     public static final String DEFAULT_MEMORY_KEY = "clusterCount";
 
@@ -70,7 +70,7 @@ public class ClusterCountMapReduce extends StaticMapReduce<MapReduce.NullObject,
 
     @Override
     public void map(final Vertex vertex, final MapEmitter<NullObject, Serializable> emitter) {
-        final Property<Serializable> cluster = vertex.property(PeerPressureVertexProgram.CLUSTER);
+        final Property<Serializable> cluster = vertex.property(CLUSTER);
         if (cluster.isPresent()) {
             emitter.emit(NullObject.instance(), cluster.value());
         }

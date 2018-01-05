@@ -24,6 +24,7 @@ import org.apache.commons.configuration.ConfigurationUtils;
 import org.apache.tinkerpop.gremlin.ExceptionCoverage;
 import org.apache.tinkerpop.gremlin.LoadGraphWith;
 import org.apache.tinkerpop.gremlin.process.AbstractGremlinProcessTest;
+import org.apache.tinkerpop.gremlin.process.computer.clustering.ClusterCountMapReduce;
 import org.apache.tinkerpop.gremlin.process.computer.clustering.peerpressure.PeerPressureVertexProgram;
 import org.apache.tinkerpop.gremlin.process.computer.ranking.pagerank.PageRankVertexProgram;
 import org.apache.tinkerpop.gremlin.process.computer.traversal.TraversalVertexProgram;
@@ -2107,7 +2108,7 @@ public class GraphComputerTest extends AbstractGremlinProcessTest {
         assertTrue(memory2.getIteration() <= 4);
         assertEquals(6, graph2.traversal().V().count().next().intValue());
         assertEquals(6, graph2.traversal().E().count().next().intValue());
-        assertEquals(6, graph2.traversal().V().values(PeerPressureVertexProgram.CLUSTER).count().next().intValue());
+        assertEquals(6, graph2.traversal().V().values(ClusterCountMapReduce.CLUSTER).count().next().intValue());
         assertEquals(6, graph2.traversal().V().values(PageRankVertexProgram.PAGE_RANK).count().next().intValue());
         assertEquals(24, graph2.traversal().V().values().count().next().intValue());
         //
@@ -2126,7 +2127,7 @@ public class GraphComputerTest extends AbstractGremlinProcessTest {
         assertEquals(6, graph3.traversal().V().count().next().intValue());
         assertEquals(6, graph3.traversal().E().count().next().intValue());
         assertEquals(0, graph3.traversal().V().values(TraversalVertexProgram.HALTED_TRAVERSERS).count().next().intValue());
-        assertEquals(6, graph3.traversal().V().values(PeerPressureVertexProgram.CLUSTER).count().next().intValue());
+        assertEquals(6, graph3.traversal().V().values(ClusterCountMapReduce.CLUSTER).count().next().intValue());
         assertEquals(6, graph3.traversal().V().values(PageRankVertexProgram.PAGE_RANK).count().next().intValue());
         assertEquals(24, graph3.traversal().V().values().count().next().intValue()); // no halted traversers
 

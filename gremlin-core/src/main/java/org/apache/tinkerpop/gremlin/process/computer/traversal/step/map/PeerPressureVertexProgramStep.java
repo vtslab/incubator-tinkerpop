@@ -21,6 +21,7 @@ package org.apache.tinkerpop.gremlin.process.computer.traversal.step.map;
 
 import org.apache.tinkerpop.gremlin.process.computer.GraphFilter;
 import org.apache.tinkerpop.gremlin.process.computer.Memory;
+import org.apache.tinkerpop.gremlin.process.computer.clustering.ClusterCountMapReduce;
 import org.apache.tinkerpop.gremlin.process.computer.clustering.peerpressure.PeerPressureVertexProgram;
 import org.apache.tinkerpop.gremlin.process.computer.traversal.lambda.HaltedTraversersCountTraversal;
 import org.apache.tinkerpop.gremlin.process.traversal.Traversal;
@@ -46,7 +47,7 @@ import java.util.Set;
 public final class PeerPressureVertexProgramStep extends VertexProgramStep implements TraversalParent, ByModulating, TimesModulating {
 
     private PureTraversal<Vertex, Edge> edgeTraversal;
-    private String clusterProperty = PeerPressureVertexProgram.CLUSTER;
+    private String clusterProperty = ClusterCountMapReduce.CLUSTER;
     private int times = 30;
 
     public PeerPressureVertexProgramStep(final Traversal.Admin traversal) {

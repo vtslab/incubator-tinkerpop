@@ -22,7 +22,7 @@ package org.apache.tinkerpop.gremlin.process.traversal.step.map;
 import org.apache.tinkerpop.gremlin.LoadGraphWith;
 import org.apache.tinkerpop.gremlin.TestHelper;
 import org.apache.tinkerpop.gremlin.process.AbstractGremlinProcessTest;
-import org.apache.tinkerpop.gremlin.process.computer.clustering.peerpressure.PeerPressureVertexProgram;
+import org.apache.tinkerpop.gremlin.process.computer.clustering.ClusterCountMapReduce;
 import org.apache.tinkerpop.gremlin.process.traversal.Traversal;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
@@ -59,7 +59,7 @@ public abstract class PeerPressureTest extends AbstractGremlinProcessTest {
         while (traversal.hasNext()) {
             final Vertex vertex = traversal.next();
             counter++;
-            assertTrue(vertex.property(PeerPressureVertexProgram.CLUSTER).isPresent());
+            assertTrue(vertex.property(ClusterCountMapReduce.CLUSTER).isPresent());
         }
         assertEquals(6, counter);
     }

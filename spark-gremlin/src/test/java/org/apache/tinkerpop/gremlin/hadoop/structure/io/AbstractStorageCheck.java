@@ -60,8 +60,8 @@ public abstract class AbstractStorageCheck extends AbstractGremlinTest {
         assertEquals(6, result.graph().traversal().V().count().next().longValue());
         assertEquals(0, result.graph().traversal().E().count().next().longValue());
         assertEquals(6, result.graph().traversal().V().values("name").count().next().longValue());
-        assertEquals(6, result.graph().traversal().V().values(PeerPressureVertexProgram.CLUSTER).count().next().longValue());
-        assertEquals(2, result.graph().traversal().V().values(PeerPressureVertexProgram.CLUSTER).dedup().count().next().longValue());
+        assertEquals(6, result.graph().traversal().V().values(ClusterCountMapReduce.CLUSTER).count().next().longValue());
+        assertEquals(2, result.graph().traversal().V().values(ClusterCountMapReduce.CLUSTER).dedup().count().next().longValue());
         assertEquals(6, IteratorUtils.count(storage.head(Constants.getGraphLocation(outputLocation), outputGraphParserClass)));
         for (int i = 0; i < 7; i++) {
             assertEquals(i, IteratorUtils.count(storage.head(Constants.getGraphLocation(outputLocation), outputGraphParserClass, i)));

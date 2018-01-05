@@ -25,6 +25,7 @@ import org.apache.tinkerpop.gremlin.process.computer.MemoryComputeKey;
 import org.apache.tinkerpop.gremlin.process.computer.MessageScope;
 import org.apache.tinkerpop.gremlin.process.computer.Messenger;
 import org.apache.tinkerpop.gremlin.process.computer.VertexComputeKey;
+import org.apache.tinkerpop.gremlin.process.computer.clustering.ClusterCountMapReduce;
 import org.apache.tinkerpop.gremlin.process.computer.util.AbstractVertexProgramBuilder;
 import org.apache.tinkerpop.gremlin.process.computer.util.StaticVertexProgram;
 import org.apache.tinkerpop.gremlin.process.traversal.Operator;
@@ -59,7 +60,6 @@ public class PeerPressureVertexProgram extends StaticVertexProgram<Pair<Serializ
     private MessageScope.Local<?> voteScope = MessageScope.Local.of(__::outE);
     private MessageScope.Local<?> countScope = MessageScope.Local.of(new MessageScope.Local.ReverseTraversalSupplier(this.voteScope));
 
-    public static final String CLUSTER = "gremlin.peerPressureVertexProgram.cluster";
     private static final String VOTE_STRENGTH = "gremlin.peerPressureVertexProgram.voteStrength";
     private static final String INITIAL_VOTE_STRENGTH_TRAVERSAL = "gremlin.pageRankVertexProgram.initialVoteStrengthTraversal";
     private static final String PROPERTY = "gremlin.peerPressureVertexProgram.property";
@@ -72,7 +72,7 @@ public class PeerPressureVertexProgram extends StaticVertexProgram<Pair<Serializ
     private PureTraversal<Vertex, ? extends Number> initialVoteStrengthTraversal = null;
     private int maxIterations = 30;
     private boolean distributeVote = false;
-    private String property = CLUSTER;
+    private String property = ClusterCountMapReduce.CLUSTER;
 
     private static final Set<MemoryComputeKey> MEMORY_COMPUTE_KEYS = Collections.singleton(MemoryComputeKey.of(VOTE_TO_HALT, Operator.and, false, true));
 
@@ -89,7 +89,7 @@ public class PeerPressureVertexProgram extends StaticVertexProgram<Pair<Serializ
             this.voteScope = MessageScope.Local.of(() -> this.edgeTraversal.get().clone());
             this.countScope = MessageScope.Local.of(new MessageScope.Local.ReverseTraversalSupplier(this.voteScope));
         }
-        this.property = configuration.getString(PROPERTY, CLUSTER);
+        this.property = configuration.getString(PROPERTY, ClusterCountMapReduce.CLUSTER);
         this.maxIterations = configuration.getInt(MAX_ITERATIONS, 30);
         this.distributeVote = configuration.getBoolean(DISTRIBUTE_VOTE, false);
     }

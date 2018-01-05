@@ -23,6 +23,7 @@ import org.apache.tinkerpop.gremlin.LoadGraphWith;
 import org.apache.tinkerpop.gremlin.process.AbstractGremlinProcessTest;
 import org.apache.tinkerpop.gremlin.process.computer.ComputerResult;
 import org.apache.tinkerpop.gremlin.process.computer.GraphComputer;
+import org.apache.tinkerpop.gremlin.process.computer.clustering.ClusterCountMapReduce;
 import org.apache.tinkerpop.gremlin.util.iterator.IteratorUtils;
 import org.junit.Test;
 
@@ -41,23 +42,23 @@ public class PeerPressureVertexProgramTest extends AbstractGremlinProcessTest {
     @Test
     @LoadGraphWith(MODERN)
     public void shouldExecutePeerPressure() throws Exception {
-        /*if (g.getGraphComputer().get().features().supportsResultGraphPersistCombination(GraphComputer.ResultGraph.NEW, GraphComputer.Persist.VERTEX_PROPERTIES)) {
-            final ComputerResult result = graph.compute(g.getGraphComputer().get().getClass()).program(PeerPressureVertexProgram.build().create(graph)).submit().get();
-            final Set<Object> clusters = new HashSet<>();
-            result.graph().traversal().V().forEachRemaining(v -> {
-                assertEquals(4, v.keys().size()); // name, age/lang, voteStrength, cluster
-                assertTrue(v.keys().contains("name"));
-                assertTrue(v.keys().contains(PeerPressureVertexProgram.VOTE_STRENGTH));
-                assertTrue(v.keys().contains(PeerPressureVertexProgram.CLUSTER));
-                assertEquals(1, IteratorUtils.count(v.values("name")));
-                assertEquals(1, IteratorUtils.count(v.values(PeerPressureVertexProgram.CLUSTER)));
-                final Object cluster = v.value(PeerPressureVertexProgram.CLUSTER);
-                clusters.add(cluster);
-            });
-            //assertEquals(2, clusters.size());
-            //assertEquals(3, result.memory().getIteration());
-            assertEquals(1, result.memory().asMap().size());
-            assertTrue(result.memory().keys().contains("gremlin.peerPressureVertexProgram.voteToHalt"));  // this is private in PeerPressureVertexProgram (and that is okay)
-        }*/
+//        if (graphProvider.getGraphComputer(graph).features().supportsResultGraphPersistCombination(GraphComputer.ResultGraph.NEW, GraphComputer.Persist.VERTEX_PROPERTIES)) {
+//            final ComputerResult result = graph.compute(graphProvider.getGraphComputer(graph).getClass()).program(PeerPressureVertexProgram.build().create(graph)).submit().get();
+//            final Set<Object> clusters = new HashSet<>();
+//            result.graph().traversal().V().forEachRemaining(v -> {
+//                assertEquals(4, v.keys().size()); // name, age/lang, voteStrength, cluster
+//                assertTrue(v.keys().contains("name"));
+//                assertTrue(v.keys().contains("gremlin.peerPressureVertexProgram.voteStrength"));  // this is private in PeerPressureVertexProgram (and that is okay)
+//                assertTrue(v.keys().contains(ClusterCountMapReduce.CLUSTER));
+//                assertEquals(1, IteratorUtils.count(v.values("name")));
+//                assertEquals(1, IteratorUtils.count(v.values(ClusterCountMapReduce.CLUSTER)));
+//                final Object cluster = v.value(ClusterCountMapReduce.CLUSTER);
+//                clusters.add(cluster);
+//            });
+//            assertEquals(2, clusters.size());
+//            assertEquals(3, result.memory().getIteration());
+//            assertEquals(1, result.memory().asMap().size());
+//            assertTrue(result.memory().keys().contains("gremlin.peerPressureVertexProgram.voteToHalt"));  // this is private in PeerPressureVertexProgram (and that is okay)
+//        }
     }
 }

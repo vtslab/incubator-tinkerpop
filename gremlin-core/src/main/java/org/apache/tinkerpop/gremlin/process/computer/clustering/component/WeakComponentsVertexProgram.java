@@ -21,6 +21,7 @@ package org.apache.tinkerpop.gremlin.process.computer.clustering.component;
 import org.apache.commons.configuration.Configuration;
 import org.apache.commons.lang.ObjectUtils;
 import org.apache.tinkerpop.gremlin.process.computer.*;
+import org.apache.tinkerpop.gremlin.process.computer.clustering.ClusterCountMapReduce;
 import org.apache.tinkerpop.gremlin.process.computer.util.AbstractVertexProgramBuilder;
 import org.apache.tinkerpop.gremlin.process.traversal.Operator;
 import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.__;
@@ -39,7 +40,6 @@ import java.util.*;
 public class WeakComponentsVertexProgram<M extends Comparable & Serializable> implements VertexProgram<M> {
 
 
-    public static final String COMPONENT = "gremlin.weakComponentsVertexProgram.weakComponent";
     private static final String CHANGED = "gremlin.weakComponentsVertexProgram.changed";
     private static final String HAS_SENT = "gremlin.weakComponentsVertexProgram.edgeCount";
     private static final String MAX_ITERATIONS = "gremlin.weakComponentsVertexProgram.maxIterations";
@@ -48,7 +48,7 @@ public class WeakComponentsVertexProgram<M extends Comparable & Serializable> im
     private MessageScope.Local<M> inScope = MessageScope.Local.of(__::inE);
     private MessageScope.Local<M> outScope = MessageScope.Local.of(__::outE);
     private int maxIterations;
-    private String property = COMPONENT;
+    private String property;
     private Set<VertexComputeKey> vertexComputeKeys;
     private Set<MemoryComputeKey> memoryComputeKeys;
 
@@ -58,7 +58,7 @@ public class WeakComponentsVertexProgram<M extends Comparable & Serializable> im
     @Override
     public void loadState(final Graph graph, final Configuration configuration) {
         this.maxIterations = configuration.getInt(MAX_ITERATIONS, 20);
-        this.property = configuration.getString(PROPERTY, COMPONENT);
+        this.property = configuration.getString(PROPERTY, ClusterCountMapReduce.CLUSTER);
         this.vertexComputeKeys = new HashSet<>(Arrays.asList(
                 VertexComputeKey.of(this.property, false),
                 VertexComputeKey.of(HAS_SENT, true)));
@@ -159,8 +159,7 @@ public class WeakComponentsVertexProgram<M extends Comparable & Serializable> im
 
     @Override
     public boolean terminate(final Memory memory) {
-        boolean terminate = memory.<Long>get(CHANGED) < 1 || memory.getIteration() >= this.maxIterations;
-        return terminate;
+        return memory.<Long>get(CHANGED) < 1 || memory.getIteration() >= this.maxIterations;
     }
 
     @Override
