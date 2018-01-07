@@ -19,7 +19,6 @@
 package org.apache.tinkerpop.gremlin.process.computer.ranking.pagerank;
 
 import org.apache.tinkerpop.gremlin.LoadGraphWith;
-import org.apache.tinkerpop.gremlin.process.AbstractGremlinProcessTest;
 import org.apache.tinkerpop.gremlin.process.computer.AbstractVertexProgramTest;
 import org.apache.tinkerpop.gremlin.process.computer.ComputerResult;
 import org.apache.tinkerpop.gremlin.process.computer.GraphComputer;
@@ -49,7 +48,6 @@ public class PageRankVertexProgramTest extends AbstractVertexProgramTest {
                 assertEquals(1, IteratorUtils.count(v.values(PageRankVertexProgram.PAGE_RANK)));
                 final String name = v.value("name");
                 final Double pageRank = v.value(PageRankVertexProgram.PAGE_RANK);
-                //System.out.println(name + "-----" + pageRank);
                 if (name.equals("marko"))
                     assertTrue(pageRank > 0.10 && pageRank < 0.12);
                 else if (name.equals("vadas"))
@@ -84,7 +82,6 @@ public class PageRankVertexProgramTest extends AbstractVertexProgramTest {
                 assertEquals(1, IteratorUtils.count(v.values(PageRankVertexProgram.PAGE_RANK)));
                 final String name = v.value("name");
                 final Double pageRank = v.value(PageRankVertexProgram.PAGE_RANK);
-                //System.out.println(name + "-----" + pageRank);
                 if (name.equals("marko"))
                     assertTrue(pageRank > 0.10 && pageRank < 0.12);
                 else if (name.equals("vadas"))

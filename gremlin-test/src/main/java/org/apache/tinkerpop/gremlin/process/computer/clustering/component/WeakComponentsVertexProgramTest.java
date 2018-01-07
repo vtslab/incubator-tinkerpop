@@ -20,7 +20,6 @@
 package org.apache.tinkerpop.gremlin.process.computer.clustering.component;
 
 import org.apache.tinkerpop.gremlin.LoadGraphWith;
-import org.apache.tinkerpop.gremlin.process.AbstractGremlinProcessTest;
 import org.apache.tinkerpop.gremlin.process.computer.AbstractVertexProgramTest;
 import org.apache.tinkerpop.gremlin.process.computer.ComputerResult;
 import org.apache.tinkerpop.gremlin.process.computer.GraphComputer;
@@ -62,6 +61,8 @@ public class WeakComponentsVertexProgramTest extends AbstractVertexProgramTest {
     }
     //ToDo: add test for multiple clusters
     //ToDo: ClusterCountMapReduce and ClusterPopulationMapReduce tests in AbstractStorageCheck (already works manually)
+    //ToDo: Vote_to_halt mechanism
+    //ToDo: tests in style of Pagerank
     //Done: gremlin-server test fails on org.apache.tinkerpop.gremlin.groovy.jsr223.RemoteGraphGroovyTranslatorProcessStandardTest
-    //ToDo: better way for optouts in org/apache/tinkerpop/gremlin/process/remote/RemoteGraph.java:  instanceOf VertexProgram
+    //Done: better way for optouts in org/apache/tinkerpop/gremlin/process/remote/RemoteGraph.java:  instanceOf VertexProgram
 }
