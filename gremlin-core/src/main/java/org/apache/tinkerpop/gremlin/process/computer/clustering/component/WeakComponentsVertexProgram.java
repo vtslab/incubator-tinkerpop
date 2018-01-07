@@ -58,6 +58,9 @@ public class WeakComponentsVertexProgram<M extends Comparable & Serializable> im
     @Override
     public void loadState(final Graph graph, final Configuration configuration) {
         this.maxIterations = configuration.getInt(MAX_ITERATIONS, 20);
+        if (this.maxIterations < 2) {
+            throw new IllegalArgumentException("The value of iterations should be at least 2");
+        }
         this.property = configuration.getString(PROPERTY, ClusterCountMapReduce.CLUSTER);
         this.vertexComputeKeys = new HashSet<>(Arrays.asList(
             VertexComputeKey.of(this.property, false)));

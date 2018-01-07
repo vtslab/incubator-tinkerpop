@@ -42,9 +42,35 @@ public class WeakComponentsVertexProgramTest extends AbstractVertexProgramTest {
 
     @Test
     @LoadGraphWith(MODERN)
-    public void shouldExecuteWeakComponents() throws Exception {
+    public void shouldExecuteWeakComponentsWithIterationsBreak() throws Exception {
         if (graphProvider.getGraphComputer(graph).features().supportsResultGraphPersistCombination(GraphComputer.ResultGraph.NEW, GraphComputer.Persist.VERTEX_PROPERTIES)) {
-            final ComputerResult result = graph.compute(graphProvider.getGraphComputer(graph).getClass()).program(WeakComponentsVertexProgram.build().create(graph)).submit().get();
+            final ComputerResult result = graph.
+                compute(graphProvider.getGraphComputer(graph).getClass()).
+                program(WeakComponentsVertexProgram.build().iterations(2).create(graph)).
+                submit().get();
+            final Set<Object> clusters = new HashSet<>();
+            result.graph().traversal().V().forEachRemaining(v -> {
+                assertEquals(3, v.keys().size()); // name, age/lang, component
+                assertTrue(v.keys().contains("name"));
+                assertTrue(v.keys().contains(ClusterCountMapReduce.CLUSTER));
+                assertEquals(1, IteratorUtils.count(v.values("name")));
+                assertEquals(1, IteratorUtils.count(v.values(ClusterCountMapReduce.CLUSTER)));
+                final Object cluster = v.value(ClusterCountMapReduce.CLUSTER);
+                clusters.add(cluster);
+            });
+            assertEquals(1, clusters.size());
+            assertEquals(2, result.memory().getIteration());
+        }
+    }
+
+    @Test
+    @LoadGraphWith(MODERN)
+    public void shouldExecuteWeakComponentsWithConvergenceBreak() throws Exception {
+        if (graphProvider.getGraphComputer(graph).features().supportsResultGraphPersistCombination(GraphComputer.ResultGraph.NEW, GraphComputer.Persist.VERTEX_PROPERTIES)) {
+            final ComputerResult result = graph.
+                compute(graphProvider.getGraphComputer(graph).getClass()).
+                program(WeakComponentsVertexProgram.build().create(graph)).
+                submit().get();
             final Set<Object> clusters = new HashSet<>();
             result.graph().traversal().V().forEachRemaining(v -> {
                 assertEquals(3, v.keys().size()); // name, age/lang, component
@@ -59,10 +85,11 @@ public class WeakComponentsVertexProgramTest extends AbstractVertexProgramTest {
             assertEquals(3, result.memory().getIteration());
         }
     }
+
     //ToDo: add test for multiple clusters
     //ToDo: ClusterCountMapReduce and ClusterPopulationMapReduce tests in AbstractStorageCheck (already works manually)
-    //ToDo: Vote_to_halt mechanism
-    //ToDo: tests in style of Pagerank
+    //Done: Vote_to_halt mechanisms
+    //Done: tests in style of Pagerank
     //Done: gremlin-server test fails on org.apache.tinkerpop.gremlin.groovy.jsr223.RemoteGraphGroovyTranslatorProcessStandardTest
     //Done: better way for optouts in org/apache/tinkerpop/gremlin/process/remote/RemoteGraph.java:  instanceOf VertexProgram
 }
