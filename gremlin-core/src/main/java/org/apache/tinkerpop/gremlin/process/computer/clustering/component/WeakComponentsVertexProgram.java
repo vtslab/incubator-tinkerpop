@@ -35,8 +35,8 @@ import java.util.*;
 
 
 /**
- * @author Marko A. Rodriguez (http://markorodriguez.com)
  * @author Marc de Lignie
+ * @author Marko A. Rodriguez (http://markorodriguez.com)
  */
 public class WeakComponentsVertexProgram<M extends Comparable & Serializable> implements VertexProgram<M> {
 
