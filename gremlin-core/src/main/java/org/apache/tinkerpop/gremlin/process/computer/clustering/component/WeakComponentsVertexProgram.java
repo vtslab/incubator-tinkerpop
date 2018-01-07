@@ -41,10 +41,9 @@ import java.util.*;
 public class WeakComponentsVertexProgram<M extends Comparable & Serializable> implements VertexProgram<M> {
 
 
-    private static final String CHANGED = "gremlin.weakComponentsVertexProgram.changed";
-    private static final String HAS_SENT = "gremlin.weakComponentsVertexProgram.edgeCount";
     private static final String MAX_ITERATIONS = "gremlin.weakComponentsVertexProgram.maxIterations";
     private static final String PROPERTY = "gremlin.weakComponentsVertexProgram.property";
+    private static final String VOTE_TO_HALT = "gremlin.peerPressureVertexProgram.voteToHalt";
 
     private MessageScope.Local<M> inScope = MessageScope.Local.of(__::inE);
     private MessageScope.Local<M> outScope = MessageScope.Local.of(__::outE);
@@ -61,10 +60,9 @@ public class WeakComponentsVertexProgram<M extends Comparable & Serializable> im
         this.maxIterations = configuration.getInt(MAX_ITERATIONS, 20);
         this.property = configuration.getString(PROPERTY, ClusterCountMapReduce.CLUSTER);
         this.vertexComputeKeys = new HashSet<>(Arrays.asList(
-                VertexComputeKey.of(this.property, false),
-                VertexComputeKey.of(HAS_SENT, true)));
-        this.memoryComputeKeys = new HashSet<>(Arrays.asList( // ToDo: use VOTE_TO_HALT mechanism from PeerPressure
-                MemoryComputeKey.of(CHANGED, Operator.sum, false, true)));
+            VertexComputeKey.of(this.property, false)));
+        this.memoryComputeKeys = new HashSet<>(Arrays.asList(
+            MemoryComputeKey.of(VOTE_TO_HALT, Operator.and, false, true)));
     }
 
     @Override
@@ -118,49 +116,37 @@ public class WeakComponentsVertexProgram<M extends Comparable & Serializable> im
     }
 
     @Override
-    public void setup(final Memory memory) {
-        memory.set(CHANGED, 0L);
-    }
+    public void setup(final Memory memory) { memory.set(VOTE_TO_HALT, false); } // Do not terminate after first iteration
 
-    /*
-    After an iteration:
-        CHANGED holds the number of vertices that CHANGED their PROPERTY in this iteration
-        HAS_SENT indicates whether a vertex has sent a message
-    */
     @Override
     public void execute(final Vertex vertex, Messenger<M> messenger, final Memory memory) {
         if (memory.isInitialIteration()) {
             messenger.sendMessage(this.inScope, (M)(vertex.id()));
             messenger.sendMessage(this.outScope, (M)(vertex.id()));
             vertex.property(VertexProperty.Cardinality.single, this.property, vertex.id());
-            vertex.property(VertexProperty.Cardinality.single, HAS_SENT, true);
-            memory.add(CHANGED, 1L);
         } else {
             final List<M> receivedMessages = new ArrayList<>();
             messenger.receiveMessages().forEachRemaining(receivedMessages::add);
             final M receivedComponent = receivedMessages.stream().reduce(
                     null, (a, b) -> (M)ObjectUtils.min(a, b));
-            System.out.println(String.format("receivedComponent: %d", receivedComponent));
             if (ObjectUtils.compare(receivedComponent, vertex.value(this.property), true) < 0) {
                 messenger.sendMessage(this.inScope, receivedComponent);
                 messenger.sendMessage(this.outScope, receivedComponent);
+                memory.add(VOTE_TO_HALT, false);
                 vertex.property(VertexProperty.Cardinality.single, this.property, receivedComponent);
-                if (vertex.<Boolean>value(HAS_SENT) == false) {
-                    vertex.property(VertexProperty.Cardinality.single, HAS_SENT, true);
-                    memory.add(CHANGED, 1L);
-                }
-            } else {
-                if (vertex.<Boolean>value(HAS_SENT) == true) {
-                    vertex.property(VertexProperty.Cardinality.single, HAS_SENT, false);
-                    memory.add(CHANGED, -1L);
-                }
             }
         }
     }
 
     @Override
     public boolean terminate(final Memory memory) {
-        return memory.<Long>get(CHANGED) < 1 || memory.getIteration() >= this.maxIterations;
+        final boolean voteToHalt = memory.<Boolean>get(VOTE_TO_HALT) || memory.getIteration() >= this.maxIterations;
+        if (voteToHalt) {
+            return true;
+        } else {
+            memory.set(VOTE_TO_HALT, true);
+            return false;
+        }
     }
 
     @Override
