@@ -39,7 +39,7 @@ public class PageRankVertexProgramTest extends AbstractVertexProgramTest {
     public void shouldExecutePageRankWithIterationsBreak() throws Exception {
         if (graphProvider.getGraphComputer(graph).features().supportsResultGraphPersistCombination(GraphComputer.ResultGraph.NEW, GraphComputer.Persist.VERTEX_PROPERTIES)) {
             final ComputerResult result = graph.compute(graphProvider.getGraphComputer(graph).getClass()).
-                    program(PageRankVertexProgram.build().epsilon(0.0d).iterations(30).create(graph)).submit().get(); // by using epsilon 0.0, we guarantee iterations 30
+                    program(PageRankVertexProgram.build().epsilon(0.0d).iterations(30).create(graph)).submit().get(); // by using epsilon 0.0, we guarantee maxIterations 30
             result.graph().traversal().V().forEachRemaining(v -> {
                 assertEquals(3, v.keys().size()); // name, age/lang, pageRank
                 assertTrue(v.keys().contains("name"));
@@ -73,7 +73,7 @@ public class PageRankVertexProgramTest extends AbstractVertexProgramTest {
     public void shouldExecutePageRankWithEpsilonBreak() throws Exception {
         if (graphProvider.getGraphComputer(graph).features().supportsResultGraphPersistCombination(GraphComputer.ResultGraph.NEW, GraphComputer.Persist.VERTEX_PROPERTIES)) {
             final ComputerResult result = graph.compute(graphProvider.getGraphComputer(graph).getClass()).
-                    program(PageRankVertexProgram.build().epsilon(0.00001d).iterations(30).create(graph)).submit().get(); // by using epsilon 0.00001, we should get iterations 11
+                    program(PageRankVertexProgram.build().epsilon(0.00001d).iterations(30).create(graph)).submit().get(); // by using epsilon 0.00001, we should get maxIterations 11
             result.graph().traversal().V().forEachRemaining(v -> {
                 assertEquals(3, v.keys().size()); // name, age/lang, pageRank
                 assertTrue(v.keys().contains("name"));

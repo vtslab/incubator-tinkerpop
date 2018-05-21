@@ -25,7 +25,6 @@ import org.apache.tinkerpop.gremlin.process.computer.ComputerResult;
 import org.apache.tinkerpop.gremlin.process.computer.GraphComputer;
 import org.apache.tinkerpop.gremlin.process.computer.clustering.ClusterCountMapReduce;
 import org.apache.tinkerpop.gremlin.process.computer.clustering.ClusterPopulationMapReduce;
-import org.apache.tinkerpop.gremlin.process.traversal.dsl.graph.GraphTraversalSource;
 import org.apache.tinkerpop.gremlin.structure.Graph;
 import org.apache.tinkerpop.gremlin.structure.T;
 import org.apache.tinkerpop.gremlin.structure.Vertex;
@@ -49,7 +48,7 @@ public class WeakComponentsVertexProgramTest extends AbstractVertexProgramTest {
         if (graphProvider.getGraphComputer(graph).features().supportsResultGraphPersistCombination(GraphComputer.ResultGraph.NEW, GraphComputer.Persist.VERTEX_PROPERTIES)) {
             final ComputerResult result = graph.
                 compute(graphProvider.getGraphComputer(graph).getClass()).
-                program(WeakComponentsVertexProgram.build().iterations(2).create(graph)).
+                program(WeakComponentsVertexProgram.build().maxIterations(2).create(graph)).
                 submit().get();
             final Set<Object> clusters = new HashSet<>();
             result.graph().traversal().V().forEachRemaining(v -> {

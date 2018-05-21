@@ -271,7 +271,7 @@ public class GremlinDriverIntegrateTest extends AbstractGremlinServerIntegration
         final Cluster cluster = TestClientFactory.open();
         final Client client = cluster.connect();
 
-        // tested independently to 10000 iterations but for speed, bumped back to 1000
+        // tested independently to 10000 maxIterations but for speed, bumped back to 1000
         IntStream.range(0,1000).forEach(i -> {
             try {
                 client.submit("1 + 9 9").all().join().get(0).getInt();

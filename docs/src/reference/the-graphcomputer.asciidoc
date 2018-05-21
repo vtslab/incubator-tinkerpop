@@ -138,7 +138,7 @@ graph = TinkerFactory.createModern()
 result = graph.compute().program(PeerPressureVertexProgram.build().create()).mapReduce(ClusterPopulationMapReduce.build().create()).submit().get()
 result.memory().get('clusterPopulation')
 g = result.graph().traversal()
-g.V().values(PeerPressureVertexProgram.CLUSTER).groupCount().next()
+g.V().values(ClusterCountMapReduce.CLUSTER).groupCount().next()
 g.V().valueMap()
 ----
 

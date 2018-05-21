@@ -541,7 +541,7 @@ public class GraphComputerTest extends AbstractGremlinProcessTest {
         assertTrue(results.memory().keys().contains("b"));
         assertTrue(results.memory().getRuntime() >= 0);
 
-        assertEquals(12, results.memory().<Integer>get("a").intValue());   // 2 iterations
+        assertEquals(12, results.memory().<Integer>get("a").intValue());   // 2 maxIterations
         assertEquals(28, results.memory().<Integer>get("b").intValue());
         try {
             results.memory().get("BAD");
