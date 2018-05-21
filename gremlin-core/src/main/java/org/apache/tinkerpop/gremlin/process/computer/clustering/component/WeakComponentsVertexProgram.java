@@ -59,7 +59,7 @@ public class WeakComponentsVertexProgram<M extends Comparable & Serializable> im
     public void loadState(final Graph graph, final Configuration configuration) {
         this.maxIterations = configuration.getInt(MAX_ITERATIONS, 20);
         if (this.maxIterations < 2) {
-            throw new IllegalArgumentException("The value of iterations should be at least 2");
+            throw new IllegalArgumentException("The value of maxIterations should be at least 2");
         }
         this.property = configuration.getString(PROPERTY, ClusterCountMapReduce.CLUSTER);
         this.vertexComputeKeys = new HashSet<>(Arrays.asList(
@@ -154,7 +154,7 @@ public class WeakComponentsVertexProgram<M extends Comparable & Serializable> im
 
     @Override
     public String toString() {
-        return StringFactory.vertexProgramString(this, "iterations=" + this.maxIterations);
+        return StringFactory.vertexProgramString(this, "maxIterations=" + this.maxIterations);
     }
 
     //////////////////////////////
@@ -169,7 +169,7 @@ public class WeakComponentsVertexProgram<M extends Comparable & Serializable> im
             super(WeakComponentsVertexProgram.class);
         }
 
-        public Builder iterations(final int iterations) {
+        public Builder maxIterations(final int iterations) {
             this.configuration.setProperty(MAX_ITERATIONS, iterations);
             return this;
         }

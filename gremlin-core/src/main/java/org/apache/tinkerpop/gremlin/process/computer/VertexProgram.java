@@ -37,7 +37,7 @@ import java.util.Set;
  * At minimum there is one "worker" for each vertex, though this is impractical in practice and {@link GraphComputer}
  * implementations that leverage such a design are not expected to perform well due to the excess object creation.
  * Any local state/fields in a VertexProgram is static to the vertices within the same worker set.
- * It is not safe to assume that the VertexProgram's "worker" state will remain stable between iterations.
+ * It is not safe to assume that the VertexProgram's "worker" state will remain stable between maxIterations.
  * Hence, the existence of {@link VertexProgram#workerIterationStart} and {@link VertexProgram#workerIterationEnd}.
  *
  * @author Marko A. Rodriguez (http://markorodriguez.com)
